@@ -1,5 +1,22 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken');
+
+
+const getToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: process.env.JWT_EXPIRES,
+    })
+}
+const setCookies = (res, token, days) =>{
+    const maxAge = days * 24 * 60 * 60 * 1000;
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'lax',
+        maxAge,
+        path: '/',
+    })
+}
 exports.createUser = async (req, res) => {
     const { name, email, password } = req.body
     if (!name || !email || !password) {
@@ -31,6 +48,7 @@ exports.createUser = async (req, res) => {
 }
 exports.login = async (req, res) => {
     const { email, password } = req.body
+    console.log(req.body)
     if (!email || !password) {
         return res.status(400).json({
             ok:false,
@@ -46,6 +64,7 @@ exports.login = async (req, res) => {
             })
         }
         const isPasswordMatch = await user.comparePassword(password);
+        console.log(isPasswordMatch)
         if (!isPasswordMatch) {
             return res.status(400).json({
                 ok:false,
@@ -75,20 +94,5 @@ exports.isAuthenticate = async (req, res) => {
             email: req.user.email,
             role: req.user.role,
         },
-    })
-}
-const getToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES,
-    })
-}
-const setCookies = (res, token, days) =>{
-    const maxAge = days * 24 * 60 * 60 * 1000;
-    res.cookie('token', token, {
-        maxAge,
-        path: '/',
-        secure: false,
-        httpOnly: true,
-        sameSite: 'lax',
     })
 }
