@@ -1,4 +1,5 @@
 const Category = require('../models/Category')
+const Job = require("../models/Job");
 
 exports.createCategory = async (req, res) => {
     try {
@@ -51,22 +52,22 @@ exports.updateCategory = async (req, res) => {
         return res.status(500).json({ ok: false, message: err.message });
     }
 }
-exports.deleteJob = async (req, res) => {
+exports.deleteCategory = async (req, res) => {
     try {
         const id = req.params.id
 
-        const job = await Job.findByIdAndDelete(id)
+        const job = await Category.findByIdAndDelete(id)
 
         if (!job) {
             return res.status(404).json({
                 ok: false,
-                message: "Job not found"
+                message: "Category not found"
             })
         }
 
         return res.status(200).json({
             ok: true,
-            message: "Job deleted successfully"
+            message: "Category deleted successfully"
         })
 
     } catch (err) {

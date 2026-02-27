@@ -70,3 +70,29 @@ exports.updateJobs = async (req, res) => {
         return res.status(500).json({ ok: false, message: err.message });
     }
 }
+
+exports.deleteJob = async (req, res) => {
+    try {
+        const id = req.params.id
+
+        const job = await Job.findByIdAndDelete(id)
+
+        if (!job) {
+            return res.status(404).json({
+                ok: false,
+                message: "Job not found"
+            })
+        }
+
+        return res.status(200).json({
+            ok: true,
+            message: "Job deleted successfully"
+        })
+
+    } catch (err) {
+        return res.status(500).json({
+            ok: false,
+            message: err.message
+        })
+    }
+}
