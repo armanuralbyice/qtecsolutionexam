@@ -23,14 +23,12 @@ export default function Sidebar() {
             title: "Jobs",
             submenu: [
                 { title: "All Jobs", link: "/admin/jobs" },
-                { title: "Add Job", link: "/admin/jobs?add=true" },
             ],
         },
         {
             title: "Categories",
             submenu: [
-                { title: "All Categories", link: "/admin/categories" },
-                { title: "Add Category", link: "/admin/categories?add=true" },
+                { title: "Create Categories", link: "/admin/categories" },
             ],
         },
         { title: "Applications", link: "/admin/applications" },

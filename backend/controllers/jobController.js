@@ -35,7 +35,7 @@ catch(err) {
 
 exports.getAllJobs = async (req, res) => {
     try {
-        const jobs = await Job.find().sort({createdAt: -1})
+        const jobs = await Job.find().populate("category", "name").sort({createdAt: -1})
         return res.status(200).json({ok: true, data: jobs})
 
     }catch (err){
