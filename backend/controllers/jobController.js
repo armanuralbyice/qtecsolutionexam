@@ -128,10 +128,10 @@ exports.createApplication = async (req, res) => {
     try {
         const { jobId, name, email, phone } = req.body;
 
-        if (!req.file) {
+        if (!jobId || !name || !email || !phone || !req.file) {
             return res.status(400).json({
                 ok: false,
-                message: "CV file required",
+                message: "All fields are required",
             });
         }
 
@@ -140,7 +140,7 @@ exports.createApplication = async (req, res) => {
             name,
             email,
             phone,
-            cv: req.file.filename,
+            resumeUrl: req.file.filename,
         });
 
         await newApplication.save();
@@ -150,6 +150,7 @@ exports.createApplication = async (req, res) => {
             message: "Application submitted successfully",
         });
     } catch (error) {
+        console.log("APPLICATION ERROR:", error); // 👈 ADD THIS
         res.status(500).json({
             ok: false,
             message: error.message,
