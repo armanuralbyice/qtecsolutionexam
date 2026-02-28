@@ -150,7 +150,20 @@ exports.createApplication = async (req, res) => {
             message: "Application submitted successfully",
         });
     } catch (error) {
-        console.log("APPLICATION ERROR:", error); // 👈 ADD THIS
+        console.log("APPLICATION ERROR:", error);
+        res.status(500).json({
+            ok: false,
+            message: error.message,
+        });
+    }
+};
+
+exports.getAllApplications = async (req, res) => {
+    try {
+        const applications = await Application.find().populate("job", "title").sort({createdAt: -1})
+        return res.status(200).json({ok: true, data: applications})
+    } catch (error) {
+        console.log("APPLICATION ERROR:", error);
         res.status(500).json({
             ok: false,
             message: error.message,
