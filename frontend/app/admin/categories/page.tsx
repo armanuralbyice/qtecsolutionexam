@@ -33,9 +33,9 @@ export default function CategoriesPage() {
 
         let result;
         if (editCategoryId) {
-            result = await updateCategory(editCategoryId, { name: newCategory });
+            result = await updateCategory(editCategoryId, {_id: "", name: newCategory });
         } else {
-            result = await createCategory({ name: newCategory });
+            result = await createCategory({_id: "", name: newCategory });
         }
 
         setLoading(false);

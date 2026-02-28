@@ -3,117 +3,21 @@
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import companyDashboard from '@/assets/dashboardCompany.png'
+import {getAllJobs} from "@/services/jobService";
+import {useEffect, useState} from "react";
+import {JobModel} from "@/models/job";
+import Link from "next/link";
 export default function jobsection() {
-    const jobs = [
-        {
-            id: 1,
-            icon: 'R',
-            iconBg: 'bg-blue-600',
-            title: 'Email Marketing',
-            company: 'Revolut',
-            location: 'Madrid, Spain',
-            description: 'Revolut is looking for Email Marketing to help team m...',
-            tags: [
-                { label: 'Marketing', color: 'bg-orange-100 text-orange-700' },
-                { label: 'Design', color: 'bg-teal-100 text-teal-700' },
-            ],
-            type: 'Full Time',
-        },
-        {
-            id: 2,
-            icon: '☁️',
-            iconBg: 'bg-blue-100',
-            title: 'Brand Designer',
-            company: 'Dropbox',
-            location: 'San Francisco, US',
-            description: 'Dropbox is looking for Brand Designer to help the team t...',
-            tags: [
-                { label: 'Design', color: 'bg-teal-100 text-teal-700' },
-                { label: 'Business', color: 'bg-purple-100 text-purple-700' },
-            ],
-            type: 'Full Time',
-        },
-        {
-            id: 3,
-            icon: '🔴',
-            iconBg: 'bg-black',
-            title: 'Email Marketing',
-            company: 'Pitch',
-            location: 'Berlin, Germany',
-            description: 'Pitch is looking for Customer Manager to join marketing t...',
-            tags: [
-                { label: 'Marketing', color: 'bg-orange-100 text-orange-700' },
-            ],
-            type: 'Full Time',
-        },
-        {
-            id: 4,
-            icon: '✓',
-            iconBg: 'bg-green-600',
-            title: 'Visual Designer',
-            company: 'Blinkist',
-            location: 'Granada, Spain',
-            description: 'Blinkist is looking for Visual Designer to help team desi...',
-            tags: [
-                { label: 'Design', color: 'bg-teal-100 text-teal-700' },
-            ],
-            type: 'Full Time',
-        },
-        {
-            id: 5,
-            icon: '⚡',
-            iconBg: 'bg-blue-600',
-            title: 'Product Designer',
-            company: 'ClassPass',
-            location: 'Manchester, UK',
-            description: 'ClassPass is looking for Product Designer to help us...',
-            tags: [
-                { label: 'Marketing', color: 'bg-orange-100 text-orange-700' },
-                { label: 'Design', color: 'bg-teal-100 text-teal-700' },
-            ],
-            type: 'Full Time',
-        },
-        {
-            id: 6,
-            icon: 'C',
-            iconBg: 'bg-teal-600',
-            title: 'Lead Designer',
-            company: 'Canva',
-            location: 'Ontario, Canada',
-            description: 'Canva is looking for Lead Engineer to help design...',
-            tags: [
-                { label: 'Design', color: 'bg-teal-100 text-teal-700' },
-                { label: 'Business', color: 'bg-purple-100 text-purple-700' },
-            ],
-            type: 'Full Time',
-        },
-        {
-            id: 7,
-            icon: '◉',
-            iconBg: 'bg-black',
-            title: 'Brand Strategist',
-            company: 'GoDaddy',
-            location: 'Marseille, France',
-            description: 'GoDaddy is looking for Brand Strategist to join the team...',
-            tags: [
-                { label: 'Marketing', color: 'bg-orange-100 text-orange-700' },
-            ],
-            type: 'Full Time',
-        },
-        {
-            id: 8,
-            icon: '𝕏',
-            iconBg: 'bg-blue-400',
-            title: 'Data Analyst',
-            company: 'Twitter',
-            location: 'San Diego, US',
-            description: 'Twitter is looking for Data Analyst to help team desi...',
-            tags: [
-                { label: 'Technology', color: 'bg-red-100 text-red-700' },
-            ],
-            type: 'Full Time',
-        },
-    ];
+    const [jobs, setJobs] = useState<JobModel[]>([]);
+    const fetchJobs = async () => {
+        const res = await getAllJobs();
+        if (res.ok && res.data) setJobs(res.data);
+        else alert(res.message || "Failed to fetch jobs");
+    };
+
+    useEffect(() => {
+        fetchJobs();
+    }, []);
 
     const categories = [
         { id: 1, icon: '✕', title: 'Design', jobs: 235, highlighted: false },
@@ -146,22 +50,23 @@ export default function jobsection() {
                 {/* Job Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                     {jobs.map((job) => (
+                        <Link key={job._id} href={`/jobs/${job._id}`}>
                         <div
-                            key={job.id}
+                            key={job._id}
                             className="border border-gray-200 rounded-lg p-4 sm:p-5 hover:shadow-lg transition-shadow duration-200 flex flex-col"
                         >
                             {/* Top Section: Icon and Full Time Badge */}
                             <div className="flex items-start justify-between mb-4">
                                 {/* Icon */}
-                                <div
-                                    className={`w-10 h-10 rounded-full ${job.iconBg} flex items-center justify-center text-white text-lg font-bold flex-shrink-0`}
-                                >
-                                    {job.icon}
-                                </div>
+                                {/*<div*/}
+                                {/*    className={`w-10 h-10 rounded-full ${job.iconBg} flex items-center justify-center text-white text-lg font-bold flex-shrink-0`}*/}
+                                {/*>*/}
+                                {/*    {job.icon}*/}
+                                {/*</div>*/}
                                 {/* Full Time Badge */}
-                                <span className="inline-block px-3 py-1 border border-purple-600 text-purple-600 text-xs font-medium rounded">
-                  {job.type}
-                </span>
+                {/*                <span className="inline-block px-3 py-1 border border-purple-600 text-purple-600 text-xs font-medium rounded">*/}
+                {/*  {job.type}*/}
+                {/*</span>*/}
                             </div>
 
                             {/* Job Title */}
@@ -183,16 +88,15 @@ export default function jobsection() {
 
                             {/* Tags */}
                             <div className="flex flex-wrap gap-2">
-                                {job.tags.map((tag, index) => (
+
                                     <span
-                                        key={index}
-                                        className={`px-2.5 py-1 text-xs font-medium rounded ${tag.color}`}
+                                        className={`px-2.5 py-1 text-xs font-medium rounded bg-amber-200`}
                                     >
-                    {tag.label}
+                    Full Time
                   </span>
-                                ))}
                             </div>
                         </div>
+                        </Link>
                     ))}
                 </div>
                 {/* CTA Section */}

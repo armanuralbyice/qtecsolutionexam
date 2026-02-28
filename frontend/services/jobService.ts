@@ -12,6 +12,26 @@ export const getAllJobs = async (): Promise<Response> => {
         return { ok: false, message: err instanceof Error ? err.message : "Network Error" };
     }
 };
+export const getJobById = async (id: string): Promise<any> => {
+    try {
+        const res = await fetch(`${BASE_URL}/${id}`, {
+            credentials: "include",
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.message || "Failed to fetch job");
+        }
+
+        return data;
+    } catch (err: unknown) {
+        return {
+            ok: false,
+            message: err instanceof Error ? err.message : "Network Error",
+        };
+    }
+};
 
 export const createJob = async (job: JobModel): Promise<Response> => {
     try {
@@ -50,5 +70,19 @@ export const deleteJob = async (id: string): Promise<Response> => {
         return await res.json();
     } catch (err: unknown) {
         return { ok: false, message: err instanceof Error ? err.message : "Network Error" };
+    }
+};
+
+export const applyJob = async (formData: FormData) => {
+    debugger
+    try {
+        const res = await fetch(`${BASE_URL}/application`, {
+            method: "POST",
+            body: formData,
+        });
+
+        return await res.json();
+    } catch (error) {
+        return { ok: false, message: "Network Error" };
     }
 };

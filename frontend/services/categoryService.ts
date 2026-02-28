@@ -24,6 +24,7 @@ export const getAllCategories = async (): Promise<Response> => {
             method: "GET",
             // credentials: "include",
         });
+        debugger
         const result = await res.json();
         return { ...result, ok: res.ok };
     } catch (error: unknown) {
