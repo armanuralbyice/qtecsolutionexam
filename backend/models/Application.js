@@ -15,6 +15,10 @@ const applicationSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        phone: {
+            type: String,
+            required: true,
+        },
         resumeUrl: {
             type: String,
             required: true,

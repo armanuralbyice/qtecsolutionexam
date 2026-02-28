@@ -25,7 +25,18 @@ export const loginUser = async (data: LoginModel): Promise<LoginResponse> => {
         return { message, ok: false }
     }
 }
+export const logoutUser = async () => {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+            method: "POST",
+            credentials: "include",
+        });
 
+        return await res.json();
+    } catch (err) {
+        return { ok: false, message: "Network Error" };
+    }
+};
 export const getUser = async (): Promise<User | null> => {
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {

@@ -36,7 +36,7 @@ export default function Sidebar() {
 
     return (
         <div className="w-64 bg-gray-900 text-white min-h-screen p-4 flex flex-col">
-            <h1 className="text-2xl font-bold mb-8 text-center">Job Admin Panel</h1>
+            <h1 className="text-2xl font-bold mb-8 text-center">QuickHire</h1>
             <ul className="space-y-2 flex-1">
                 {menuItems.map((item, idx) => (
                     <li key={idx}>

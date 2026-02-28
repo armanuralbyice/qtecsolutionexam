@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import { Bars3Icon } from "@heroicons/react/24/solid";
+import {logoutUser} from "@/services/authService";
+import {useRouter} from "next/navigation";
 
 interface AdminLayoutProps {
     children: React.ReactNode;
@@ -9,6 +11,17 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        const res = await logoutUser();
+        if (res.ok) {
+            alert("Logged out successfully");
+            router.push("/login");
+        } else {
+            alert(res.message);
+        }
+    };
 
     return (
         <div className="flex min-h-screen">
@@ -38,7 +51,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                     </button>
                     <h2 className="text-xl font-bold">Admin Panel</h2>
                     <div>
-                        <button className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                        <button className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700" onClick={handleLogout}>
                             Logout
                         </button>
                     </div>

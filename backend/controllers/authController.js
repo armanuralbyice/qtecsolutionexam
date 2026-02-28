@@ -85,6 +85,28 @@ exports.login = async (req, res) => {
         })
     }
 }
+
+exports.logout = (req, res) => {
+    try {
+        res.clearCookie("token", {
+            path: "/",
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+        });
+
+        return res.status(200).json({
+            ok: true,
+            message: "Logged out successfully",
+        });
+    } catch (err) {
+        return res.status(500).json({
+            ok: false,
+            message: err.message,
+        });
+    }
+};
+
 exports.isAuthenticate = async (req, res) => {
     res.json({
         ok: true,

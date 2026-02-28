@@ -86,3 +86,17 @@ export const applyJob = async (formData: FormData) => {
         return { ok: false, message: "Network Error" };
     }
 };
+
+export const getAllApplications = async (): Promise<Response> => {
+    try {
+        const res = await fetch(`${BASE_URL}/all/application`, {
+            method: "GET",
+            credentials: "include",
+        });
+        debugger
+        const result = await res.json();
+        return { ...result, ok: res.ok };
+    } catch (error: unknown) {
+        return { ok: false, message: (error instanceof Error ? error.message : "Network Error") };
+    }
+};
