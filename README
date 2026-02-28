@@ -1,0 +1,18 @@
+Project Name: QuickHire
+
+Tech Stack:
+Frontend: Next.js 16, React 19, TailwindCSS
+Backend: Node.js, Express.js, MongoDB, Mongoose
+Authentication: JWT + HTTP-only Cookies
+File Uploads: Multer (CV upload)
+
+Project Description:
+এই project-এ দুটি main user role আছে:
+Admin – Jobs & Categories management, view applications.
+User – Browse jobs, filter by category, view job details, apply jobs with CV.
+
+Project এর মূল feature:
+Admin login/logout, CRUD for Jobs & Categories
+Jobs listing with category filter
+Job application with file upload (CV)
+Secure authentication with JWT cookies
